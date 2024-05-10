@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AttendeeController;
+use App\Http\Controllers\Api\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('event', EventController::class);
+Route::apiResource('event.attendees', AttendeeController::class)->scoped(['attendee' => 'event']);
