@@ -15,7 +15,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Event::all();
+        // return Event::all();
+        return response()->json(Event::all());
     }
 
     /**
@@ -38,7 +39,7 @@ class EventController extends Controller
         ]);
 
         // Return the newly created Event
-        return $event;
+        return response()->json($event);
     }
 
     /**
@@ -49,7 +50,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return $event;
+        return response()->json($event);
     }
 
     /**
@@ -59,9 +60,19 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        // Update Event and Validate
+        $event->update(
+            $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'description' => 'nullable|string',
+                'start_time' => 'sometimes|date',
+                'end_time' => 'sometimes|date|after:start_time'
+            ])
+        );
+
+        return response()->json($event);
     }
 
     /**
@@ -70,8 +81,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return response(status: 204);
     }
 }
