@@ -21,4 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('events', EventController::class);
-Route::apiResource('events.attendees', AttendeeController::class)->scoped(['attendee' => 'event']);
+
+// Means that every route about attendees, also has the event as the parameter
+// so attendees can't exist on their own
+Route::apiResource('events.attendees', AttendeeController::class)->scoped()->except(['update']);
