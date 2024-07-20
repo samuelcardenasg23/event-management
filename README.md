@@ -9,7 +9,28 @@
 
 ## Event Project Management
 
-The Event Project Management is a Laravel-based web application that allows users to browse events, attend events, and add their own events.
+The Event Management App is a web application designed to streamline the process of organizing and managing events. It allows users to create events, manage attendees, and track event-related data seamlessly.
+
+## Features
+
+- User Management: Register, login, and manage user profiles.
+- Event Creation: Create and manage events with detailed information.
+- Attendee Management: Track and manage event attendees.
+- Relationships: Load and manage relationships between users, events, and attendees dynamically.
+
+## API Endpoints
+- GET /events: Retrieve a list of events with optional relationship loading.
+- POST /events: Create a new event.
+- GET /events/{id}: Retrieve a specific event by ID.
+- PUT /events/{id}: Update a specific event by ID.
+- DELETE /events/{id}: Delete a specific event by ID.
+
+## Relationship Loading
+To dynamically load relationships, include the include query parameter in your requests. For example:
+
+```
+{{BASE_URL}}/events?include=user,attendees,attendees.user
+```
 
 ## Technologies Used
 
