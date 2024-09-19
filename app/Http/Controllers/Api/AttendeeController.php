@@ -15,6 +15,12 @@ class AttendeeController extends Controller
 
     private array $relations = ['user'];
 
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show', 'update']);
+        $this->authorizeResource(Attendee::class, 'event');
+    }
+
     /**
      * Display a listing of the resource.
      * @param \App\Models\Event $event
@@ -67,8 +73,10 @@ class AttendeeController extends Controller
      * @param \App\Models\Attendee $attendee
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function destroy(string $event, Attendee $attendee)
+    public function destroy(Event $event, Attendee $attendee)
     {
+        // $this->authorize('delete-attendee', [$event, $attendee]);
+
         $attendee->delete();
 
         return response(status: 204);
